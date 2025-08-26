@@ -1,9 +1,9 @@
-
 import axios from "axios";
 
-// Base URL configuration
-const API_BASE_URL = import.meta.env.VITE_API_URL ;
+// Base URL configuration - with fallback
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://your-backend-url.onrender.com';
 
+console.log('API Base URL:', API_BASE_URL); // Debug log
 
 const API = axios.create({ 
   baseURL: `${API_BASE_URL}/api`,
@@ -54,16 +54,24 @@ export const checkEmail = (email) => API.post("/breach/check", { email });
 // Get breach data from API only (no logging) - for public use
 export const getBreachData = (email) => API.get(`/breach?email=${encodeURIComponent(email)}`);
 
-// Direct breach analytics call (for public breach checking)
+// FIXED: Direct breach analytics call using axios instead of fetch
 export const getBreachAnalytics = async (email) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/breach-analytics?email=${encodeURIComponent(email)}`);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return await response.json();
+    const response = await API.get(`/breach-analytics?email=${encodeURIComponent(email)}`);
+    return response.data;
   } catch (error) {
     console.error('Error fetching breach analytics:', error);
+    
+    // Handle 404 specifically - means email not found in breaches
+    if (error.response?.status === 404) {
+      return {
+        email: email,
+        breaches: [],
+        isBreached: false,
+        message: "Email not found in any known breaches"
+      };
+    }
+    
     throw error;
   }
 };
