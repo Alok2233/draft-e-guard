@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-  origin: process.env.CLIENT_URL || "*",  // Replace * with your frontend domain when deployed
+  origin: "https://e-guard-ten.vercel.app/",  // Replace * with your frontend domain when deployed
   credentials: true
 }));
 app.use(express.json());
