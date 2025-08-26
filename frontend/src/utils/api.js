@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Base URL configuration - with fallback
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://your-backend-url.onrender.com';
+const API_BASE_URL = 'https://e-guard.onrender.com/';
 
 console.log('API Base URL:', API_BASE_URL); // Debug log
 
