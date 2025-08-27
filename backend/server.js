@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 5000;
 
 // FIXED: CORS configuration - removed extra slash
 app.use(cors({
-  origin: ["https://e-guard-ten.vercel.app", "http://localhost:5173",'https://e-guard-alok-dalkes-projects.vercel.app"],
+  origin: ["https://e-guard-ten.vercel.app", "http://localhost:5173","https://e-guard-alok-dalkes-projects.vercel.app"],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
